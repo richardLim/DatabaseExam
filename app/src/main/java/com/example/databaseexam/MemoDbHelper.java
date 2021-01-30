@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class MemoDbHelper extends SQLiteOpenHelper {
+    private static MemoDbHelper sInstance;
+
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "Memo.db";
     private static final String SQL_CREATE_ENRIES =
@@ -17,6 +19,16 @@ public class MemoDbHelper extends SQLiteOpenHelper {
                     MemoContract.MemoEntry.COLUMN_NAME_TITLE,
                     MemoContract.MemoEntry.COLUMN_NAME_CONTENTS
                     );
+
+    private static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + MemoContract.MemoEntry.TABLE_NAME;
+
+    public static MemoDbHelper getInstance(Context context) {
+        if(sInstance == null) {
+            sInstance = new MemoDbHelper(context);
+        }
+        return sInstance;
+    }
 
     public MemoDbHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -29,6 +41,8 @@ public class MemoDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(SQL_CREATE_ENRIES);
+        onCreate(db);
     }
 }
