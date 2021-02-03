@@ -17,13 +17,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/contents_edit"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:hint="내용"
-        />
+        android:background="@color/purple_200"
+        >
+        <EditText
+            android:id="@+id/contents_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="내용"
+            />
     </ScrollView>
 </LinearLayout>
